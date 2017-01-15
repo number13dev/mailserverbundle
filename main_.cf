@@ -1,0 +1,133 @@
+
+
+###### Use Dovecot LMTP Service to deliver Mails to Dovecot ######
+virtual_transport = lmtp:unix:private/dovecot-lmtp
+
+## ~~ OUTGOING CONNECTIONS ~~ ##
+
+smtpd_sender_login_maps = mysql:/etc/postfix/virtual/sender-login-maps.cf
+smtpd_sender_restrictions = reject_unknown_sender_domain,
+			    reject_non_fqdn_sender,
+			    reject_authenticated_sender_login_mismatch,
+		 	    permit_mynetworks,			    
+			    reject_unlisted_sender,
+			    permit_sasl_authenticated
+
+
+## ~~ INCOMING CONNECTIONS ~~ ##
+
+
+##### Only allow mail transport if client is authenticated or in own network (PHP Scripts, ...) ######
+##### allow mail sending if Client is authenticated or in own network (PHP scripts, ...) , block spam servers ######
+
+smtpd_recipient_restrictions = permit_sasl_authenticated, 
+        permit_mynetworks, 
+        reject_non_fqdn_hostname, 
+        reject_invalid_hostname, 
+        reject_unauth_destination, 
+        reject_unknown_client_hostname,
+		reject_non_fqdn_sender,
+		reject_non_fqdn_recipient,
+		reject_non_fqdn_helo_hostname,
+		reject_rbl_client zen.spamhaus.org 
+
+#   # Don't talk to mail systems that don't know their own hostname.
+#   # With Postfix < 2.3, specify reject_unknown_hostname.
+
+
+smtpd_helo_restrictions = 
+		permit_mynetworks,
+		reject_unknown_helo_hostname,
+    	reject_non_fqdn_helo_hostname,
+		reject_invalid_helo_hostname,
+
+
+
+smtpd_data_restrictions = reject_unauth_pipelining
+
+smtpd_helo_required = yes
+
+smtpd_relay_restrictions = 	reject_non_fqdn_recipient,
+							reject_unknown_recipient_domain,
+							permit_mynetworks,
+							reject_unauth_destination
+
+### Bedingungen, die SMTP-Clients erfüllen müssen (sendende Server)
+smtpd_client_restrictions =	permit_mynetworks,
+							check_client_access hash:/etc/postfix/without_ptr
+							reject_unknown_client_hostname
+
+### Postscreen Whitelist / Blocklist
+postscreen_access_list =        permit_mynetworks
+                                cidr:/etc/postfix/postscreen_access
+postscreen_blacklist_action = drop
+
+# Verbindungen beenden, wenn der fremde Server es zu eilig hat
+postscreen_greet_action = drop
+
+### DNS blocklists
+postscreen_dnsbl_threshold = 2
+postscreen_dnsbl_sites = dnsbl.sorbs.net*1, bl.spamcop.net*1, ix.dnsbl.manitu.net*2, zen.spamhaus.org*2
+postscreen_dnsbl_action = drop
+
+
+## ~~  TLS parameters ~~ ##
+
+tls_ssl_options = NO_COMPRESSION
+tls_high_cipherlist = EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA
+
+smtpd_tls_cert_file=${LETSENCRYPT_PATH}${MAIL_SERVER_DOMAIN}/fullchain.pem
+smtpd_tls_key_file=${LETSENCRYPT_PATH}${MAIL_SERVER_DOMAIN}/privkey.pem
+
+smtp_tls_policy_maps = mysql:/etc/postfix/sql/tls-policy.cf
+
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+
+smtpd_tls_dh1024_param_file = /etc/myssl/dh2048.pem
+smtpd_use_tls=yes
+smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+smtpd_tls_session_cache_database = btree:${DOLLAR}{data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${DOLLAR}{data_directory}/smtp_scache
+
+## ~~ ALLGEMEINE SETTINGS ~~ ##
+
+smtpd_banner = ${DOLLAR}myhostname ESMTP ${DOLLAR}mail_name 
+biff = no
+readme_directory = no
+append_dot_mydomain = no
+myorigin = ${MAIL_SERVER_DOMAIN}
+mydestination = 
+relayhost = 
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+myhostname = ${MAIL_SERVER_DOMAIN}
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = all
+maximal_queue_lifetime = 1h
+bounce_queue_lifetime = 1h
+maximal_backoff_time = 15m
+minimal_backoff_time = 5m
+queue_run_delay = 5m
+
+
+###### SASL Auth ######
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+
+###### MySQL Connection ######
+
+virtual_alias_maps = mysql:/etc/postfix/virtual/mysql-aliases.cf
+virtual_mailbox_maps = mysql:/etc/postfix/virtual/mysql-maps.cf
+virtual_mailbox_domains = mysql:/etc/postfix/virtual/mysql-domains.cf
+local_recipient_maps = ${DOLLAR}virtual_mailbox_maps
+
+## DKIM ##
+milter_protocol = 2
+milter_default_action = accept
+smtpd_milters = unix:/var/run/amavis/amavisd-milter.sock,
+                unix:/var/run/opendkim/opendkim.sock
+
+non_smtpd_milters = unix:/var/run/opendkim/opendkim.sock
+
