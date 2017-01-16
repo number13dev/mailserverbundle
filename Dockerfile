@@ -46,6 +46,7 @@ COPY init.sh /mailserver/init.sh
 COPY addAlias.sh /mailserver/addAlias.sh
 COPY start.sh /mailserver/start.sh
 COPY init_db.sh /mailserver/init_db.sh
+ADD ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN} /etc/letsencrypt/live/${MAIL_SERVER_DOMAIN}
 
 COPY config_files /mailserver/config_files/
 COPY care_scripts /mailserver/care_scripts/
