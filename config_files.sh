@@ -7,7 +7,7 @@ export VMAILHOME=/var/vmail/
 CF_PATH=config_files/
 export SUBSTITUED_CF_PATH=subs_files/
 export CARE_SCRIPT_PATH=care_scripts/
-SQL_PATH=${SUBSTITUED_CF_PATH}/sql/
+SQL_PATH=${SUBSTITUED_CF_PATH}sql/
 
 mkdir ${SUBSTITUED_CF_PATH}
 mkdir ${SQL_PATH}

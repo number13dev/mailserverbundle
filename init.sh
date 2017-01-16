@@ -4,7 +4,7 @@ echo "################ RUNNING INIT ################"
 DOMAINS=(domain1.tld domain2.tld domain3.tld)
 
 #make letsencrupt folder /will pe populated due to exposed folder
-mkdir ${LETSENCRYPT_PATH}
+mkdir -p ${LETSENCRYPT_PATH}
 
 echo "mail" > /etc/hostname
 echo $MAIL_SERVER_DOMAIN > /etc/mailname
