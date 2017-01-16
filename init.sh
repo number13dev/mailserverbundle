@@ -34,7 +34,7 @@ echo "ADDING USER"
 echo "HOME DIRECOTRY: ${VMAILHOME}"
 adduser --disabled-login --disabled-password --home ${VMAILHOME} vmail
 
-mkdir ${VMAILHOME}/mailboxes/
+mkdir -p ${VMAILHOME}/mailboxes/
 mkdir -p ${VMAILHOME}/sieve/global
 
 chown -R vmail ${VMAILHOME}

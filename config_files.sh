@@ -13,6 +13,9 @@ echo $SUBSTITUED_CF_PATH
 echo $SQL_PATH
 echo $VMAILHOME
 
+echo "- SUB - CONFIG -"
+echo "${SUBSTITUED_CF_PATH}"
+
 #DOVEVOT
 DOLLAR='$' envsubst < "${CF_PATH}dovecot_.conf" > "${SUBSTITUED_CF_PATH}dovecot.conf"
 DOLLAR='$' envsubst < "${CF_PATH}dovecot-sql_.conf" > "${SUBSTITUED_CF_PATH}dovecot-sql.conf"

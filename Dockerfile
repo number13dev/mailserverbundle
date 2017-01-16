@@ -5,7 +5,7 @@ MAINTAINER Johannes <johannes@number13.de>
 
 #EDIT THESE
 ENV LETSENCRYPT_PATH /etc/letsencrypt/live/
-ENV MAIL_SERVER_DOMAIN mail.mysystems.tld
+ENV MAIL_SERVER_DOMAIN mail.tutomail.de
 
 ENV SQL_PASSWORD SQLPASSWORD
 ENV SPAM_PASS SPAMPASSWORD
@@ -14,9 +14,9 @@ ENV SPAM_PASS SPAMPASSWORD
 #DO NOT EDIT BELOW
 ENV DEBIAN_FRONTEND noninteractive
 ENV VMAILHOME /var/vmail/
-ENV CF_PATH config_files/
+ENV CF_PATH /mailserver/config_files/
 ENV SUBSTITUED_CF_PATH subs_files/
-ENV CARE_SCRIPT_PATH care_scripts/
+ENV CARE_SCRIPT_PATH /mailserver/care_scripts/
 
 
 RUN apt-get update && apt-get install -y \
@@ -44,13 +44,15 @@ WORKDIR /mailserver
 #COPY FILES
 COPY config_files.sh /mailserver/config_files.sh
 COPY init.sh /mailserver/init.sh
-COPY config_files /mailserver/config_files/
-COPY care_scripts /mailserver/care_scripts/
 COPY addAlias.sh /mailserver/addAlias.sh
 COPY start.sh /mailserver/start.sh
 COPY init_db.sh /mailserver/init_db.sh
 
+COPY config_files /mailserver/config_files/
+COPY care_scripts /mailserver/care_scripts/
+
 RUN ./config_files.sh
+
 RUN ./init.sh
 
 # SMTP ports

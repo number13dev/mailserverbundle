@@ -19,6 +19,6 @@ docker run -i -d \
 	-p 995:995 \
 	-p 993:993 \
 	-v ${OPENDKIM_FOLDER}:/etc/opendkim/ \
-	-v ${MAIL_HOME_FOLDER}:/var/vmail/ \ 
+	-v ${MAIL_HOME_FOLDER}:/var/vmail/ \
 	-v ${LOG_FOLDER}:/var/log/ \
 	-v ${PTR_OVERRIDE}:/etc/postfix/ptroverride/
