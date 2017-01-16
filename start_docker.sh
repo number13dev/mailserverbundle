@@ -5,7 +5,6 @@ LOG_FOLDER=log/
 PTR_OVERRIDE=postfix/
 
 
-
 mkdir ${OPENDKIM_FOLDER}
 mkdir ${MAIL_HOME_FOLDER}
 mkdir ${LOG_FOLDER}
@@ -24,5 +23,5 @@ docker run -i -d \
 	-v ${PTR_OVERRIDE}:/etc/postfix/ptroverride/ \
 	-e SQL_PASSWORD=meinsqlpassword \
 	-e SPAM_PASS=spamassasinpw \
-	-e MAIL_SERVER_DOMAIN=mail.tutomail.de
+	-e MAIL_SERVER_DOMAIN=mail.tutomail.de mailserver
 

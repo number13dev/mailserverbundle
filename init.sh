@@ -70,7 +70,6 @@ systemctl enable amavisd-milter
 
 #SPAMASSASSIN
 
-
 setfacl -m o:--- /etc/mail/spamassassin/local.cf
 setfacl -m u:vmail:r /etc/mail/spamassassin/local.cf
 setfacl -m u:amavis:r /etc/mail/spamassassin/local.cf
@@ -94,7 +93,3 @@ razor-admin -register
 pyzor discover
 
 exit
-
-
-
-
