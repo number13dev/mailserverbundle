@@ -1,3 +1,9 @@
+###NETWORK
+
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+inet_interfaces = 127.0.0.1, ::1, 5.1.76.152, 2a00:f820:417::7647:b2c2
+myhostname = mail.mysystems.tld
+
 
 
 ###### Use Dovecot LMTP Service to deliver Mails to Dovecot ######
@@ -6,6 +12,7 @@ virtual_transport = lmtp:unix:private/dovecot-lmtp
 ## ~~ OUTGOING CONNECTIONS ~~ ##
 
 smtpd_sender_login_maps = mysql:/etc/postfix/virtual/sender-login-maps.cf
+
 smtpd_sender_restrictions = reject_unknown_sender_domain,
 			    reject_non_fqdn_sender,
 			    reject_authenticated_sender_login_mismatch,
@@ -123,11 +130,5 @@ virtual_mailbox_maps = mysql:/etc/postfix/virtual/mysql-maps.cf
 virtual_mailbox_domains = mysql:/etc/postfix/virtual/mysql-domains.cf
 local_recipient_maps = ${DOLLAR}virtual_mailbox_maps
 
-## DKIM ##
-milter_protocol = 2
-milter_default_action = accept
-smtpd_milters = unix:/var/run/amavis/amavisd-milter.sock,
-                unix:/var/run/opendkim/opendkim.sock
 
-non_smtpd_milters = unix:/var/run/opendkim/opendkim.sock
 
