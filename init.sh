@@ -25,7 +25,7 @@ adduser --disabled-login --disabled-password --gecos "" --home ${VMAILHOME} vmai
 mkdir -p ${VMAILHOME}/mailboxes/
 mkdir -p ${VMAILHOME}/sieve/global
 
-chown -R vmail ${VMAILHOME}
+chown -R vmail:vmail ${VMAILHOME}
 chgrp -R vmail ${VMAILHOME}
 chmod -R 770 ${VMAILHOME}
 
