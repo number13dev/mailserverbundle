@@ -2,14 +2,11 @@ FROM ubuntu
 
 MAINTAINER Johannes <johannes@number13.de>
 
-
-#EDIT THESE
 ENV LETSENCRYPT_PATH /etc/letsencrypt/live/
-ENV MAIL_SERVER_DOMAIN mail.tutomail.de
+ENV MAIL_SERVER_DOMAIN mail.example.com
 
 ENV SQL_PASSWORD SQLPASSWORD
 ENV SPAM_PASS SPAMPASSWORD
-
 
 #DO NOT EDIT BELOW
 ENV DEBIAN_FRONTEND noninteractive
@@ -37,7 +34,6 @@ RUN service dovecot stop
 RUN service postfix stop
 RUN service opendkim stop
 
-
 RUN mkdir /mailserver
 WORKDIR /mailserver
 
@@ -50,8 +46,6 @@ COPY init_db.sh /mailserver/init_db.sh
 
 COPY config_files /mailserver/config_files/
 COPY care_scripts /mailserver/care_scripts/
-
-RUN ./config_files.sh
 
 RUN ./init.sh
 

@@ -21,4 +21,8 @@ docker run -i -d \
 	-v ${OPENDKIM_FOLDER}:/etc/opendkim/ \
 	-v ${MAIL_HOME_FOLDER}:/var/vmail/ \
 	-v ${LOG_FOLDER}:/var/log/ \
-	-v ${PTR_OVERRIDE}:/etc/postfix/ptroverride/
+	-v ${PTR_OVERRIDE}:/etc/postfix/ptroverride/ \
+	-e SQL_PASSWORD=meinsqlpassword \
+	-e SPAM_PASS=spamassasinpw \
+	-e MAIL_SERVER_DOMAIN=mail.tutomail.de
+
