@@ -1,5 +1,12 @@
 #!/bin/bash
 echo "################ RUNNING INIT ################"
+echo "PATHS:"
+echo $CF_PATH
+echo $SUBSTITUED_CF_PATH
+echo $SQL_PATH
+echo $VMAILHOME
+
+echo "BEGIN"
 
 DOMAINS=(domain1.tld domain2.tld domain3.tld)
 
@@ -8,7 +15,7 @@ mkdir -p ${LETSENCRYPT_PATH}
 
 echo "mail" > /etc/hostname
 echo $MAIL_SERVER_DOMAIN > /etc/mailname
-mkdir /etc/myssl
+mkdir -p /etc/myssl
 
 crontab -l > mycron
 echo "@daily FILE=`mktemp` ; openssl dhparam 2048 -out $FILE && mv -f $FILE /etc/myssl/dh2048.pem" >> mycron
@@ -21,6 +28,8 @@ FILE=`mktemp` ; openssl dhparam 2048 -out $FILE && mv -f $FILE /etc/myssl/dh2048
 
 mkdir /var/vmail
 
+echo "ADDING USER"
+echo "HOME DIRECOTRY: ${VMAILHOME}"
 adduser --disabled-login --disabled-password --home ${VMAILHOME} vmail
 
 mkdir ${VMAILHOME}/mailboxes/

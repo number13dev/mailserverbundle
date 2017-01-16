@@ -16,6 +16,7 @@ echo "PATHS:"
 echo $CF_PATH
 echo $SUBSTITUED_CF_PATH
 echo $SQL_PATH
+echo $VMAILHOME
 
 #DOVEVOT
 DOLLAR='$' envsubst < "${CF_PATH}dovecot_.conf" > "${SUBSTITUED_CF_PATH}dovecot.conf"
