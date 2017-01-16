@@ -1,6 +1,8 @@
 #!/bin/bash
 ./config_files.sh
 
+mkdir -p ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
+
 FILE=`mktemp` ; openssl dhparam 2048 -out $FILE && mv -f $FILE /etc/myssl/dh2048.pem
 
 #DOVECOT CONFIG
@@ -53,3 +55,5 @@ service postfix start
 
 service dovecot reload
 service postfix reload
+
+tail -f /dev/null
