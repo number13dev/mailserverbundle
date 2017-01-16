@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
 RUN service dovecot stop
 RUN service postfix stop
 RUN service opendkim stop
-
+RUN systemctl stop amavisd-new
 
 RUN mkdir /mailserver
 WORKDIR /mailserver
@@ -54,7 +54,7 @@ EXPOSE 993
 
 #START EVERYTHING
 RUN service dovecot start
-RUN service amavisd-new start
-RUN service amavisd-milter start
+RUN systemctl start amavisd-new
+RUN systemctl start amavisd-milter
 RUN service opendkim start
 RUN service postfix start
