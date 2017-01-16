@@ -47,9 +47,10 @@ COPY init.sh /mailserver/init.sh
 COPY config_files /mailserver/config_files/
 COPY care_scripts /mailserver/care_scripts/
 COPY addAlias.sh /mailserver/addAlias.sh
+COPY start.sh /mailserver/start.sh
+COPY init_db.sh /mailserver/init_db.sh
 
 RUN ./config_files.sh
-
 RUN ./init.sh
 
 # SMTP ports
@@ -62,8 +63,4 @@ EXPOSE 995
 EXPOSE 993
 
 #START EVERYTHING
-RUN service dovecot start
-RUN systemctl start amavisd-new
-RUN systemctl start amavisd-milter
-RUN service opendkim start
-RUN service postfix start
+CMD ./start.sh
