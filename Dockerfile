@@ -8,8 +8,7 @@ ENV MAIL_SERVER_DOMAIN mail.mysystems.tld
 ENV SQL_PASSWORD SQLPASSWORD
 ENV SPAM_PASS SPAMPASSWORD
 
-RUN debconf-set-selections <<< "postfix postfix/mailname string your.hostname.com"
-RUN debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y \
 	cron \
