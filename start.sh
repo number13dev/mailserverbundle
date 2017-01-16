@@ -42,8 +42,7 @@ cp ${SUBSTITUED_CF_PATH}local.cf /etc/mail/spamassassin/local.cf
 cp ${SUBSTITUED_CF_PATH}50-user /etc/amavis/conf.d/50-user
 
 echo "RELOADING SERVICES"
-service dovecot reload
-service postfix reload
+
 newaliases
 
 echo "STARTING"
@@ -52,3 +51,6 @@ systemctl start amavisd-new
 systemctl start amavisd-milter
 service opendkim start
 service postfix start
+
+service dovecot reload
+service postfix reload
