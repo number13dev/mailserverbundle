@@ -8,6 +8,9 @@ ENV MAIL_SERVER_DOMAIN mail.mysystems.tld
 ENV SQL_PASSWORD SQLPASSWORD
 ENV SPAM_PASS SPAMPASSWORD
 
+RUN debconf-set-selections <<< "postfix postfix/mailname string your.hostname.com"
+RUN debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+
 RUN apt-get update && apt-get install -y \
 	cron \
 	openssl \
@@ -39,7 +42,6 @@ COPY addAlias.sh addAlias.sh
 RUN ./config_files.sh
 
 RUN ./init.sh
-
 
 # SMTP ports
 EXPOSE 25
