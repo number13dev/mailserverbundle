@@ -86,10 +86,4 @@ rm mycron
 
 ./sa-care.sh
 
-#razor registrieren
-su amavis
-razor-admin -create
-razor-admin -register
-pyzor discover
 
-exit

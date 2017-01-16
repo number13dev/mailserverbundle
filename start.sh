@@ -3,6 +3,10 @@
 
 mkdir -p ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
 
+chmod -R 777 /var/log/
+chmod -R 770 /var/vmail/
+chmod -R 770 ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
+
 FILE=`mktemp` ; openssl dhparam 2048 -out $FILE && mv -f $FILE /etc/myssl/dh2048.pem
 
 #DOVECOT CONFIG
@@ -42,6 +46,13 @@ cp ${SUBSTITUED_CF_PATH}local.cf /etc/mail/spamassassin/local.cf
 
 #AMAVIS CONTENT FILTER
 cp ${SUBSTITUED_CF_PATH}50-user /etc/amavis/conf.d/50-user
+
+##razor registrieren
+su amavis
+razor-admin -create
+razor-admin -register
+pyzor discover
+exit
 
 echo "NEW ALIASES"
 newaliases
