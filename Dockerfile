@@ -11,8 +11,8 @@ ENV SPAM_PASS SPAMPASSWORD
 
 #DO NOT EDIT BELOW
 ENV DEBIAN_FRONTEND noninteractive
-ENV VMAILHOME /var/vmail/
-ENV MAILHOME /var/mail/postboxes/
+
+
 ENV CF_PATH /mailserver/config_files/
 ENV SUBSTITUED_CF_PATH /mailserver/subs_files/
 ENV CARE_SCRIPT_PATH /mailserver/care_scripts/
@@ -50,16 +50,18 @@ COPY init_db.sh /mailserver/init_db.sh
 COPY config_files /mailserver/config_files/
 COPY care_scripts /mailserver/care_scripts/
 
+# Enables Pyzor and Razor
+USER amavis
+RUN razor-admin -create && razor-admin -register && pyzor discover
+USER root
+
 RUN ./init.sh
 
-# SMTP ports
-EXPOSE 25
-EXPOSE 587  
-# POP and IMAP ports  
-EXPOSE 110
-EXPOSE 143
-EXPOSE 995
-EXPOSE 993
+
+RUN chown -R vmail:root /etc/letsencrypt/live/
+
+#expose ports
+EXPOSE 25 587 110 143 995 991
 
 #START EVERYTHING
 CMD ./start.sh

@@ -4,8 +4,6 @@ SQL_PATH=${SUBSTITUED_CF_PATH}sql/
 DOMAINS=(domain1.tld domain2.tld domain3.tld)
 
 echo "BEGIN"
-#make letsencrupt folder /will pe populated due to exposed folder
-mkdir -p ${LETSENCRYPT_PATH}
 
 echo "mail" > /etc/hostname
 echo $MAIL_SERVER_DOMAIN > /etc/mailname
@@ -20,24 +18,21 @@ FILE=`mktemp` ; openssl dhparam 2048 -out $FILE && mv -f $FILE /etc/myssl/dh2048
 
 mkdir /etc/myssl
 mkdir /var/vmail
-adduser --disabled-login --disabled-password --gecos "" --home ${VMAILHOME} vmail
+adduser --disabled-login --disabled-password --gecos "" --home /etc/vmail/ vmail
 
-mkdir -p ${VMAILHOME}/mailboxes/
-mkdir -p ${VMAILHOME}/sieve/global
+mkdir -p /etc/vmail/mailboxes/
+mkdir -p /etc/vmail/sieve/global
 
-chown -R vmail:vmail ${VMAILHOME}
-chgrp -R vmail ${VMAILHOME}
-chmod -R 770 ${VMAILHOME}
+chown -R vmail:vmail /etc/vmail/
+chgrp -R vmail /etc/vmail/
+chmod -R 770 /etc/vmail/
 
-#SOME CHOWN STUFF
-chown -R vmail ${LETSENCRYPT_PATH}
+cp /mailserver/care_scripts/spampipe.sh /etc/vmail/spampipe.sh
 
-cp /mailserver/care_scripts/spampipe.sh ${VMAILHOME}spampipe.sh
+chown vmail:vmail /etc/vmail/spampipe.sh
+chmod u+x /etc/vmail/spampipe.sh
 
-chown vmail:vmail ${VMAILHOME}spampipe.sh
-chmod u+x ${VMAILHOME}spampipe.sh
-
-cp ${CF_PATH}spam-global.sieve ${VMAILHOME}sieve/global/spam-global.sieve
+cp /mailserver/config_files/spam-global.sieve /etc/vmail/sieve/global/spam-global.sieve
 
 mkdir -p /etc/postfix/sql/
 chmod -R 660 /etc/postfix/sql
@@ -69,7 +64,7 @@ cd ..
 rm -r amavisd-milter-master
 rm amavisd-milter.zip
 
-cp ${CF_PATH}amavisd-milter.service /etc/systemd/system/amavisd-milter.service
+cp /mailserver/config_files/amavisd-milter.service /etc/systemd/system/amavisd-milter.service
 
 systemctl enable amavisd-milter
 
@@ -81,7 +76,7 @@ setfacl -m u:amavis:r /etc/mail/spamassassin/local.cf
 
 #WARTUNGSSKRIPT
 
-cp ${CARE_SCRIPT_PATH}sa-care.sh sa-care.sh
+cp /mailserver/care_scripts/sa-care.sh sa-care.sh
 chmod +u+x sa-care.sh
 
 crontab -l > mycron

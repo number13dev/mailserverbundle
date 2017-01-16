@@ -1,7 +1,7 @@
 #!/bin/bash
 ./config_files.sh
 
-mkdir -p ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
+mkdir -p /etc/letsencrypt/live/${MAIL_SERVER_DOMAIN}/
 
 #chmod -R 777 /var/log/
 #chmod -R 770 /var/vmail/
@@ -15,17 +15,17 @@ mkdir -p ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
 
 
 #DOVECOT CONFIG
-cp ${SUBSTITUED_CF_PATH}dovecot.conf /etc/dovecot/dovecot.conf
-cp ${SUBSTITUED_CF_PATH}dovecot-sql.conf /etc/dovecot/dovecot-sql.conf
+cp /mailserver/subs_files/dovecot.conf /etc/dovecot/dovecot.conf
+cp /mailserver/subs_files/dovecot-sql.conf /etc/dovecot/dovecot-sql.conf
 chmod 770 /etc/dovecot/dovecot-sql.conf
 
 #POSTFIX
-cp ${SUBSTITUED_CF_PATH}main.cf /etc/postfix/main.cf
-cp ${SUBSTITUED_CF_PATH}master.cf /etc/postfix/master.cf
-cp -R ${SUBSTITUED_CF_PATH}sql/ /etc/postfix/sql/
+cp /mailserver/subs_files/main.cf /etc/postfix/main.cf
+cp /mailserver/subs_files/master.cf /etc/postfix/master.cf
+cp -R /mailserver/subs_files/sql/ /etc/postfix/sql/
 
 #OPENDKIM
-cp ${CF_PATH}opendkim.conf /etc/opendkim.conf
+cp /mailserver/config_files/opendkim.conf /etc/opendkim.conf
 
 opendkim-genkey --selector=key1 --bits=2048 --directory=/etc/opendkim/keys
 
@@ -47,19 +47,10 @@ echo "* default" > /etc/opendkim/signingtable
 chown opendkim /etc/opendkim/keys/key1.private
 
 #SPAMASSASSIN
-cp ${SUBSTITUED_CF_PATH}local.cf /etc/mail/spamassassin/local.cf
+cp /mailserver/subs_files/local.cf /etc/mail/spamassassin/local.cf
 
 #AMAVIS CONTENT FILTER
-cp ${SUBSTITUED_CF_PATH}50-user /etc/amavis/conf.d/50-user
-
-##razor registrieren
-echo "RAZOR REG"
-su amavis <<'EOF'
-razor-admin -create
-razor-admin -register
-pyzor discover
-
-EOF
+cp /mailserver/subs_files/50-user /etc/amavis/conf.d/50-user
 
 echo "NEW ALIASES"
 newaliases
