@@ -57,9 +57,6 @@ USER root
 
 RUN ./init.sh
 
-RUN mkdir /etc/letsencrypt/live/
-RUN chown -R vmail:root /etc/letsencrypt/live/
-
 #expose ports
 EXPOSE 25 587 110 143 995 991
 
