@@ -10,6 +10,8 @@ mkdir ${MAIL_HOME_FOLDER}
 mkdir ${LOG_FOLDER}
 mkdir ${PTR_OVERRIDE}
 
+echo ${OPENDKIM_FOLDER} ${MAIL_HOME_FOLDER} ${LOG_FOLDER} ${PTR_OVERRIDE}
+
 docker run -i -d \
 	-p 25:25 \
 	-p 587:587 \
