@@ -2,6 +2,9 @@
 
 DOMAINS=(domain1.tld domain2.tld domain3.tld)
 
+#make letsencrupt folder /will pe populated due to exposed folder
+mkdir ${LETSENCRYPT_PATH}
+
 echo "mail" > /etc/hostname
 echo $MAIL_SERVER_DOMAIN > /etc/mailname
 mkdir /etc/myssl
@@ -19,7 +22,7 @@ mkdir /var/vmail
 
 adduser --disabled-login --disabled-password --home ${VMAILHOME} vmail
 
-mkdir ${MAILHOME}
+mkdir ${VMAILHOME}/mailboxes/
 mkdir -p ${VMAILHOME}/sieve/global
 
 chown -R vmail ${VMAILHOME}
@@ -28,21 +31,31 @@ chmod -R 770 ${VMAILHOME}
 
 
 #DOVECOT CONFIG
-cp dovecot.conf /etc/dovecot/dovecot.conf
-cp dovecot-sql.conf /etc/dovecot/dovecot-sql.conf
+cp ${SUBSTITUED_CF_PATH}dovecot.conf /etc/dovecot/dovecot.conf
+cp ${SUBSTITUED_CF_PATH}dovecot-sql.conf /etc/dovecot/dovecot-sql.conf
 chmod 770 /etc/dovecot/dovecot-sql.conf
 
-cp spampipe.sh ${VMAILHOME}spampipe.sh
+cp care_scripts/spampipe.sh ${VMAILHOME}spampipe.sh
 
 chown vmail:vmail ${VMAILHOME}spampipe.sh
 chmod u+x ${VMAILHOME}spampipe.sh
 
-cp spam-global.sieve ${VMAILHOME}sieve/global/spam-global.sieve
+cp ${SUBSTITUED_CF_PATH}spam-global.sieve ${VMAILHOME}sieve/global/spam-global.sieve
 
 #POSTFIX
-cp main.cf /etc/postfix/main.cf
+cp ${SUBSTITUED_CF_PATH}main.cf /etc/postfix/main.cf
+cp ${SUBSTITUED_CF_PATH}master.cf /etc/postfix/master.cf
+
 cp -R sql/sql /etc/postfix/sql
 chmod -R 660 /etc/postfix/sql
+
+	#ptr overrride
+mkdir /etc/postfix/ptroverride/
+touch /etc/postfix/ptroverride/without_ptr
+touch /etc/postfix/ptroverride/postscreen_access
+
+postmap /etc/postfix/ptroverride/without_ptr
+service postfix reload
 
 newaliases
 
@@ -121,5 +134,7 @@ razor-admin -register
 pyzor discover
 
 exit
+
+
 
 

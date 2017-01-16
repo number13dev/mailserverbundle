@@ -10,25 +10,33 @@ export SPAM_PASS=FILL_IN_PASSWORD
 
 ##HERE
 export VMAILHOME=/var/vmail/
-export MAILHOME=${VMAILHOME}/mailboxes/
+
+CF_PATH=config_files/
+export SUBSTITUED_CF_PATH=subs_files/
+SQL_PATH=${SUBSTITUED_CF_PATH}/sql/
+
+mkdir ${SUBSTITUED_CF_PATH}
+mkdir ${SQL_PATH}
 
 #DOVEVOT
-DOLLAR='$' envsubst < "dovecot_.conf" > "dovecot.conf"
-DOLLAR='$' envsubst < "dovecot-sql_.conf" > "dovecot-sql.conf"
+DOLLAR='$' envsubst < "${CF_PATH}dovecot_.conf" > "${SUBSTITUED_CF_PATH}dovecot.conf"
+DOLLAR='$' envsubst < "${CF_PATH}dovecot-sql_.conf" > "${SUBSTITUED_CF_PATH}dovecot-sql.conf"
 
 #POSTFIX
-DOLLAR='$' envsubst < "main_.conf" > "main.conf"
+DOLLAR='$' envsubst < "${CF_PATH}main_.cf" > "${SUBSTITUED_CF_PATH}main.conf"
+DOLLAR='$' envsubst < "${CF_PATH}master_.cf" > "${SUBSTITUED_CF_PATH}main.conf"
 
-
-DOLLAR='$' envsubst < "mysql-aliases_.cf" > "mysql-aliases.cf"
-DOLLAR='$' envsubst < "mysql-domains_.cf" > "mysql-domains.cf"
-DOLLAR='$' envsubst < "mysql-maps_.cf" > "mysql-maps.cf"
-DOLLAR='$' envsubst < "sender-login-maps_.cf" > "sender-login-maps.cf"
-DOLLAR='$' envsubst < "tls-policy_.cf" > "tls-policy.cf"
+#POSTFIX-SQL-FILES
+DOLLAR='$' envsubst < "${CF_PATH}sql/aliases_.cf" > "${SQL_PATH}aliases.cf"
+DOLLAR='$' envsubst < "${CF_PATH}sql/domains_.cf" > "${SQL_PATH}domains.cf"
+DOLLAR='$' envsubst < "${CF_PATH}sql/maps_.cf" > "${SQL_PATH}mysql-maps.cf"
+DOLLAR='$' envsubst < "${CF_PATH}sql/sender-login-maps_.cf" > "${SQL_PATH}sender-login-maps.cf"
+DOLLAR='$' envsubst < "${CF_PATH}sql/tls-policy_.cf" > "${SQL_PATH}tls-policy.cf"
+DOLLAR='$' envsubst < "${CF_PATH}sql/recipient-access_.cf" > "${SQL_PATH}recipient-access.cf"
 
 
 #AMAVIS
-DOLLAR='$' envsubst < "50-user_" > "50-user"
+DOLLAR='$' envsubst < "${CF_PATH}50-user_" > "${SUBSTITUED_CF_PATH}50-user"
 
 #SPAMASSASSIN
-DOLLAR='$' envsubst < "local_.cf" > "local.cf"
+DOLLAR='$' envsubst < "${CF_PATH}local_.cf" > "${SUBSTITUED_CF_PATH}local.cf"
