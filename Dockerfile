@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
 RUN service dovecot stop
 RUN service postfix stop
 RUN service opendkim stop
-RUN systemctl stop amavisd-new
+#RUN systemctl stop amavisd-new
 
 RUN mkdir /mailserver
 WORKDIR /mailserver
