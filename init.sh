@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "################ RUNNING INIT ################"
 SQL_PATH=${SUBSTITUED_CF_PATH}sql/
+DOMAINS=(domain1.tld domain2.tld domain3.tld)
 
 echo "PATHS:"
 echo $CF_PATH
