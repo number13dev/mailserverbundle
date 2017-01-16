@@ -33,11 +33,11 @@ RUN mkdir /mailserver
 WORKDIR /mailserver
 
 #COPY FILES
-COPY config_files.sh config_files.sh
-COPY init.sh init.sh
-COPY config_files config_files/
-COPY care_scripts care_scripts/
-COPY addAlias.sh addAlias.sh
+COPY config_files.sh /mailserver/config_files.sh
+COPY init.sh /mailserver/init.sh
+COPY config_files /mailserver/config_files/
+COPY care_scripts /mailserver/care_scripts/
+COPY addAlias.sh /mailserver/addAlias.sh
 
 RUN ./config_files.sh
 
