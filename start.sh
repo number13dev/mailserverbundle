@@ -47,11 +47,10 @@ cp ${SUBSTITUED_CF_PATH}50-user /etc/amavis/conf.d/50-user
 
 ##razor registrieren
 echo "RAZOR REG"
-su amavis <<'EOF'
+
 razor-admin -create
 razor-admin -register
 pyzor discover
-EOF
 
 exit
 
