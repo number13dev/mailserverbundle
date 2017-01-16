@@ -28,7 +28,8 @@ RUN apt-get update && apt-get install -y \
 	spamassassin \
 	acl \
 	razor pyzor \
-	gettext
+	gettext \
+	wget
 
 RUN service dovecot stop
 RUN service postfix stop

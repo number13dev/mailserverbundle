@@ -18,7 +18,7 @@ rm mycron
 
 mkdir /etc/myssl
 mkdir /var/vmail
-adduser --disabled-login --disabled-password --home ${VMAILHOME} vmail
+adduser --disabled-login --disabled-password --gecos "" --home ${VMAILHOME} vmail
 
 mkdir -p ${VMAILHOME}/mailboxes/
 mkdir -p ${VMAILHOME}/sieve/global
@@ -47,7 +47,7 @@ service postfix reload
 newaliases
 
 #OPENDKIM
-
+usermod -aG opendkim postfix
 mkdir /etc/opendkim
 mkdir /etc/opendkim/keys
 

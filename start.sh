@@ -34,7 +34,6 @@ touch /etc/opendkim/signingtable
 echo "* default" > /etc/opendkim/signingtable
 
 chown opendkim /etc/opendkim/keys/key1.private
-usermod -aG opendkim postfix
 
 #SPAMASSASSIN
 cp ${SUBSTITUED_CF_PATH}local.cf /etc/mail/spamassassin/local.cf
