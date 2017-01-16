@@ -1,16 +1,4 @@
 #!/bin/bash
-OPENDKIM_FOLDER=opendkim/
-MAIL_HOME_FOLDER=vmail/
-LOG_FOLDER=log/
-PTR_OVERRIDE=postfix/
-
-
-mkdir ${OPENDKIM_FOLDER}
-mkdir ${MAIL_HOME_FOLDER}
-mkdir ${LOG_FOLDER}
-mkdir ${PTR_OVERRIDE}
-
-echo ${OPENDKIM_FOLDER} ${MAIL_HOME_FOLDER} ${LOG_FOLDER} ${PTR_OVERRIDE}
 
 docker run -i -d \
 	-p 25:25 \
@@ -19,10 +7,10 @@ docker run -i -d \
 	-p 143:143 \
 	-p 995:995 \
 	-p 993:993 \
-	-v ${OPENDKIM_FOLDER}:/etc/opendkim/ \
-	-v ${MAIL_HOME_FOLDER}:/var/vmail/ \
-	-v ${LOG_FOLDER}:/var/log/ \
-	-v ${PTR_OVERRIDE}:/etc/postfix/ptroverride/ \
+	-v opendkim:/etc/opendkim/ \
+	-v vmail:/var/vmail/ \
+	-v log:/var/log/ \
+	-v postfix:/etc/postfix/ptroverride/ \
 	-e SQL_PASSWORD=meinsqlpassword \
 	-e SPAM_PASS=spamassasinpw \
 	-e MAIL_SERVER_DOMAIN=mail.tutomail.de mailserver
