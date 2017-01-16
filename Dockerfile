@@ -15,7 +15,7 @@ ENV SPAM_PASS SPAMPASSWORD
 ENV DEBIAN_FRONTEND noninteractive
 ENV VMAILHOME /var/vmail/
 ENV CF_PATH /mailserver/config_files/
-ENV SUBSTITUED_CF_PATH subs_files/
+ENV SUBSTITUED_CF_PATH /mailserver/subs_files/
 ENV CARE_SCRIPT_PATH /mailserver/care_scripts/
 
 
