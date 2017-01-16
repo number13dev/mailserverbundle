@@ -74,4 +74,5 @@ service postfix start
 service dovecot reload
 service postfix reload
 
-tail -f /dev/null
+/bin/bash
+#tail -f /dev/null
