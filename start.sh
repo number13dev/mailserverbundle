@@ -41,8 +41,7 @@ cp ${SUBSTITUED_CF_PATH}local.cf /etc/mail/spamassassin/local.cf
 #AMAVIS CONTENT FILTER
 cp ${SUBSTITUED_CF_PATH}50-user /etc/amavis/conf.d/50-user
 
-echo "RELOADING SERVICES"
-
+echo "NEW ALIASES"
 newaliases
 
 echo "STARTING"
