@@ -17,7 +17,7 @@ ENV VMAILHOME /var/vmail/
 ENV CF_PATH config_files/
 ENV SUBSTITUED_CF_PATH subs_files/
 ENV CARE_SCRIPT_PATH care_scripts/
-ENV DOMAINS=(domain1.tld domain2.tld domain3.tld)
+
 
 RUN apt-get update && apt-get install -y \
 	cron \
