@@ -17,9 +17,6 @@ ENV CF_PATH /mailserver/config_files/
 ENV SUBSTITUED_CF_PATH /mailserver/subs_files/
 ENV CARE_SCRIPT_PATH /mailserver/care_scripts/
 
-ENV FULL_LE_PATH ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}
-
-
 RUN apt-get update && apt-get install -y \
 	cron \
 	openssl \
