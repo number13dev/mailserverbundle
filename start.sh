@@ -46,10 +46,18 @@ cp ${SUBSTITUED_CF_PATH}local.cf /etc/mail/spamassassin/local.cf
 cp ${SUBSTITUED_CF_PATH}50-user /etc/amavis/conf.d/50-user
 
 ##razor registrieren
+echo "RAZOR REG"
 su amavis
 razor-admin -create
 razor-admin -register
 pyzor discover
+
+su amavis <<'EOF'
+razor-admin -create
+razor-admin -register
+pyzor discover
+EOF
+
 exit
 
 echo "NEW ALIASES"
