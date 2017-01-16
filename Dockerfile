@@ -21,7 +21,8 @@ RUN apt-get update && apt-get install -y \
 	gcc libmilter-dev make unzip \
 	spamassassin \
 	acl \
-	razor pyzor
+	razor pyzor \
+	gettext
 
 RUN service dovecot stop
 RUN service postfix stop
