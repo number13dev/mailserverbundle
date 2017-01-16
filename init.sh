@@ -29,6 +29,9 @@ chown -R vmail ${VMAILHOME}
 chgrp -R vmail ${VMAILHOME}
 chmod -R 770 ${VMAILHOME}
 
+#SOME CHOWN STUFF
+chown -R vmail ${LETSENCRYPT_PATH}
+
 cp /mailserver/care_scripts/spampipe.sh ${VMAILHOME}spampipe.sh
 
 chown vmail:vmail ${VMAILHOME}spampipe.sh
