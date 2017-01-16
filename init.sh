@@ -10,6 +10,9 @@ echo $SQL_PATH
 echo $VMAILHOME
 echo "DOMAINS: ${DOMAINS}"
 
+echo "copy config files"
+
+
 echo "BEGIN"
 
 #make letsencrupt folder /will pe populated due to exposed folder
@@ -52,7 +55,7 @@ cp care_scripts/spampipe.sh ${VMAILHOME}spampipe.sh
 chown vmail:vmail ${VMAILHOME}spampipe.sh
 chmod u+x ${VMAILHOME}spampipe.sh
 
-cp ${SUBSTITUED_CF_PATH}spam-global.sieve ${VMAILHOME}sieve/global/spam-global.sieve
+cp ${CF_PATH}spam-global.sieve ${VMAILHOME}sieve/global/spam-global.sieve
 
 #POSTFIX
 cp ${SUBSTITUED_CF_PATH}main.cf /etc/postfix/main.cf
@@ -73,7 +76,7 @@ newaliases
 
 #OPENDKIM
 
-cp ${SUBSTITUED_CF_PATH}opendkim.conf /etc/opendkim.conf
+cp ${CF_PATH}opendkim.conf /etc/opendkim.conf
 
 mkdir /etc/opendkim
 mkdir /etc/opendkim/keys
@@ -115,7 +118,7 @@ cd ..
 rm -r amavisd-milter-master
 rm amavisd-milter.zip
 
-cp ${SUBSTITUED_CF_PATH}amavisd-milter.service /etc/systemd/system/amavisd-milter.service
+cp ${CF_PATH}amavisd-milter.service /etc/systemd/system/amavisd-milter.service
 
 systemctl enable amavisd-milter
 
