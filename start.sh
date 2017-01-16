@@ -3,9 +3,9 @@
 
 mkdir -p ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
 
-chmod -R 777 /var/log/
-chmod -R 770 /var/vmail/
-chmod -R 770 ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
+#chmod -R 777 /var/log/
+#chmod -R 770 /var/vmail/
+#chmod -R 770 ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
 
 #EXECUTE LETSENCRYPT
 #letsencrypt certonly --standalone --agree-tos --rsa-key-size 4096 \
