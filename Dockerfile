@@ -30,7 +30,8 @@ RUN apt-get update && apt-get install -y \
 	acl \
 	razor pyzor \
 	gettext \
-	wget
+	wget \
+	letsencrypt
 
 RUN service dovecot stop
 RUN service postfix stop

@@ -7,6 +7,13 @@ chmod -R 777 /var/log/
 chmod -R 770 /var/vmail/
 chmod -R 770 ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
 
+#EXECUTE LETSENCRYPT
+#letsencrypt certonly --standalone --agree-tos --rsa-key-size 4096 \
+#	-d ${MAIL_SERVER_DOMAIN} \
+#	-d imap.tutomail.de \
+#	-d smtp.tutomail.de
+
+
 #DOVECOT CONFIG
 cp ${SUBSTITUED_CF_PATH}dovecot.conf /etc/dovecot/dovecot.conf
 cp ${SUBSTITUED_CF_PATH}dovecot-sql.conf /etc/dovecot/dovecot-sql.conf
