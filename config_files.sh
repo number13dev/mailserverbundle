@@ -21,8 +21,8 @@ DOLLAR='$' envsubst < "${CF_PATH}dovecot_.conf" > "${SUBSTITUED_CF_PATH}dovecot.
 DOLLAR='$' envsubst < "${CF_PATH}dovecot-sql_.conf" > "${SUBSTITUED_CF_PATH}dovecot-sql.conf"
 
 #POSTFIX
-DOLLAR='$' envsubst < "${CF_PATH}main_.cf" > "${SUBSTITUED_CF_PATH}main.conf"
-DOLLAR='$' envsubst < "${CF_PATH}master_.cf" > "${SUBSTITUED_CF_PATH}main.conf"
+DOLLAR='$' envsubst < "${CF_PATH}main_.cf" > "${SUBSTITUED_CF_PATH}main.cf"
+DOLLAR='$' envsubst < "${CF_PATH}master_.cf" > "${SUBSTITUED_CF_PATH}master.cf"
 
 #POSTFIX-SQL-FILES
 DOLLAR='$' envsubst < "${CF_PATH}sql/aliases_.cf" > "${SQL_PATH}aliases.cf"

@@ -16,6 +16,8 @@ echo "@daily FILE=`mktemp` ; openssl dhparam 2048 -out $FILE && mv -f $FILE /etc
 crontab mycron
 rm mycron
 
+FILE=`mktemp` ; openssl dhparam 2048 -out $FILE && mv -f $FILE /etc/myssl/dh2048.pem
+
 mkdir /etc/myssl
 mkdir /var/vmail
 adduser --disabled-login --disabled-password --gecos "" --home ${VMAILHOME} vmail

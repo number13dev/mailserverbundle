@@ -7,8 +7,6 @@ chmod -R 777 /var/log/
 chmod -R 770 /var/vmail/
 chmod -R 770 ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
 
-FILE=`mktemp` ; openssl dhparam 2048 -out $FILE && mv -f $FILE /etc/myssl/dh2048.pem
-
 #DOVECOT CONFIG
 cp ${SUBSTITUED_CF_PATH}dovecot.conf /etc/dovecot/dovecot.conf
 cp ${SUBSTITUED_CF_PATH}dovecot-sql.conf /etc/dovecot/dovecot-sql.conf

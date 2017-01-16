@@ -12,7 +12,7 @@ docker run -t -i \
 	-p 143:143 \
 	-p 995:995 \
 	-p 993:993 \
-	-v /etc/letsencrypt/live/mail.tutomail.de:/etc/letsencrypt/live/mail.tutomail.de \
+	-v /etc/letsencrypt/live/mail.tutomail.de/:/etc/letsencrypt/live/mail.tutomail.de/ \
 	-v opendkim:/etc/opendkim/ \
 	-v vmail:/var/vmail/ \
 	-v log:/var/log/ \
