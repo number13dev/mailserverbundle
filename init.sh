@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "RUNNING INIT"
+echo "################ RUNNING INIT ################"
 
 DOMAINS=(domain1.tld domain2.tld domain3.tld)
 
