@@ -1,18 +1,12 @@
 #!/bin/bash
-
-
-export LETSENCRYPT_PATH=/etc/letsencrypt/live/
-export MAIL_SERVER_DOMAIN=mail.mysystems.tld
-
-export SQL_PASSWORD=FILL_IN_PASSWORD
-export SPAM_PASS=FILL_IN_PASSWORD
-
-
 ##HERE
+echo "RUNNING CONFIG FILES"
+
 export VMAILHOME=/var/vmail/
 
 CF_PATH=config_files/
 export SUBSTITUED_CF_PATH=subs_files/
+export CARE_SCRIPT_PATH=care_scripts/
 SQL_PATH=${SUBSTITUED_CF_PATH}/sql/
 
 mkdir ${SUBSTITUED_CF_PATH}

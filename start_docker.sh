@@ -5,10 +5,6 @@ LOG_FOLDER=log/
 PTR_OVERRIDE=postfix/
 
 
-#substitute config files
-chmod +x config_files.sh
-./config_files.sh
-
 
 mkdir ${OPENDKIM_FOLDER}
 mkdir ${MAIL_HOME_FOLDER}

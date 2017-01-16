@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "RUNNING INIT"
 
 DOMAINS=(domain1.tld domain2.tld domain3.tld)
 
@@ -61,7 +62,7 @@ newaliases
 
 #OPENDKIM
 
-cp opendkim.conf /etc/opendkim.conf
+cp ${SUBSTITUED_CF_PATH}opendkim.conf /etc/opendkim.conf
 
 mkdir /etc/opendkim
 mkdir /etc/opendkim/keys
@@ -88,7 +89,7 @@ usermod -aG opendkim postfix
 
 #AMAVIS CONTENT FILTER
 
-cp 50-user /etc/amavis/conf.d/50-user
+cp ${SUBSTITUED_CF_PATH}50-user /etc/amavis/conf.d/50-user
 
 #AMAVISD-MILTER COMPILIEREN
 wget 'https://github.com/ThomasLeister/amavisd-milter/archive/master.zip' -O amavisd-milter.zip
@@ -103,13 +104,13 @@ cd ..
 rm -r amavisd-milter-master
 rm amavisd-milter.zip
 
-cp amavisd-milter.service /etc/systemd/system/amavisd-milter.service
+cp ${SUBSTITUED_CF_PATH}amavisd-milter.service /etc/systemd/system/amavisd-milter.service
 
 systemctl enable amavisd-milter
 
 #SPAMASSASSIN
 
-cp local.cf /etc/mail/spamassassin/local.cf
+cp ${SUBSTITUED_CF_PATH}local.cf /etc/mail/spamassassin/local.cf
 
 setfacl -m o:--- /etc/mail/spamassassin/local.cf
 setfacl -m u:vmail:r /etc/mail/spamassassin/local.cf
@@ -117,7 +118,7 @@ setfacl -m u:amavis:r /etc/mail/spamassassin/local.cf
 
 #WARTUNGSSKRIPT
 
-cp sa-care.sh /root/sa-care.sh
+cp ${CARE_SCRIPT_PATH}sa-care.sh sa-care.sh
 chmod +u+x sa-care.sh
 
 crontab -l > mycron
@@ -125,7 +126,7 @@ echo "@daily /root/sa-care.sh" >> mycron
 crontab mycron
 rm mycron
 
-/root/sa-care.sh
+./sa-care.sh
 
 #razor registrieren
 sudo -i -u amavis

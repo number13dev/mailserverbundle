@@ -2,12 +2,11 @@ FROM ubuntu
 
 MAINTAINER Johannes <johannes@number13.de>
 
-ENV LETSENCRYPT_PATH=/etc/letsencrypt/live/
-ENV MAIL_SERVER_DOMAIN=mail.mysystems.tld
+ENV LETSENCRYPT_PATH /etc/letsencrypt/live/
+ENV MAIL_SERVER_DOMAIN mail.mysystems.tld
 
-ENV SQL_PASSWORD=SQLPASSWORD
-
-ENV SPAM_PASS=SPAMPASSWORD
+ENV SQL_PASSWORD SQLPASSWORD
+ENV SPAM_PASS SPAMPASSWORD
 
 RUN apt-get update && apt-get install -y \
 	cron \
@@ -37,8 +36,7 @@ COPY config_files config_files/
 COPY care_scripts care_scripts/
 COPY addAlias.sh addAlias.sh
 
-#SET WORKDIR
-WORKDIR /mailserver
+RUN ./config_files.sh
 
 RUN ./init.sh
 
@@ -58,6 +56,3 @@ RUN service amavisd-new start
 RUN service amavisd-milter start
 RUN service opendkim start
 RUN service postfix start
-
-
-
