@@ -29,5 +29,6 @@ docker run -t -i \
 	-v postfix:/etc/postfix/ptroverride/ \
 	-e SQL_PASSWORD=meinsqlpassword \
 	-e SPAM_PASS=spamassasinpw \
+	-e SERVER_DOMAIN=tutomail.de
 	-e MAIL_SERVER_DOMAIN=mail.tutomail.de mailserver
 

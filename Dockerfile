@@ -4,6 +4,7 @@ MAINTAINER Johannes <johannes@number13.de>
 
 ENV LETSENCRYPT_PATH /etc/letsencrypt/live/
 ENV MAIL_SERVER_DOMAIN mail.example.com
+ENV SERVER_DOMAIN example.com
 
 ENV SQL_PASSWORD SQLPASSWORD
 ENV SPAM_PASS SPAMPASSWORD
@@ -11,6 +12,7 @@ ENV SPAM_PASS SPAMPASSWORD
 #DO NOT EDIT BELOW
 ENV DEBIAN_FRONTEND noninteractive
 ENV VMAILHOME /var/vmail/
+ENV MAILHOME /var/mail/postboxes/
 ENV CF_PATH /mailserver/config_files/
 ENV SUBSTITUED_CF_PATH /mailserver/subs_files/
 ENV CARE_SCRIPT_PATH /mailserver/care_scripts/
