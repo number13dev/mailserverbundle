@@ -2,13 +2,22 @@ FROM ubuntu
 
 MAINTAINER Johannes <johannes@number13.de>
 
+
+#EDIT THESE
 ENV LETSENCRYPT_PATH /etc/letsencrypt/live/
 ENV MAIL_SERVER_DOMAIN mail.mysystems.tld
 
 ENV SQL_PASSWORD SQLPASSWORD
 ENV SPAM_PASS SPAMPASSWORD
 
+
+#DO NOT EDIT BELOW
 ENV DEBIAN_FRONTEND noninteractive
+ENV VMAILHOME /var/vmail/
+ENV CF_PATH config_files/
+ENV SUBSTITUED_CF_PATH subs_files/
+ENV CARE_SCRIPT_PATH care_scripts/
+ENV DOMAINS=(domain1.tld domain2.tld domain3.tld)
 
 RUN apt-get update && apt-get install -y \
 	cron \

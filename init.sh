@@ -1,14 +1,15 @@
 #!/bin/bash
 echo "################ RUNNING INIT ################"
+SQL_PATH=${SUBSTITUED_CF_PATH}sql/
+
 echo "PATHS:"
 echo $CF_PATH
 echo $SUBSTITUED_CF_PATH
 echo $SQL_PATH
 echo $VMAILHOME
+echo "DOMAINS: ${DOMAINS}"
 
 echo "BEGIN"
-
-DOMAINS=(domain1.tld domain2.tld domain3.tld)
 
 #make letsencrupt folder /will pe populated due to exposed folder
 mkdir -p ${LETSENCRYPT_PATH}
