@@ -2,17 +2,7 @@
 ./config_files.sh
 
 mkdir -p /etc/letsencrypt/live/${MAIL_SERVER_DOMAIN}/
-
-#chmod -R 777 /var/log/
-#chmod -R 770 /var/vmail/
-#chmod -R 770 ${LETSENCRYPT_PATH}/${MAIL_SERVER_DOMAIN}/
-
-#EXECUTE LETSENCRYPT
-#letsencrypt certonly --standalone --agree-tos --rsa-key-size 4096 \
-#	-d ${MAIL_SERVER_DOMAIN} \
-#	-d imap.tutomail.de \
-#	-d smtp.tutomail.de
-
+chown -R vmail:root mail.tutomail.de/
 
 #DOVECOT CONFIG
 cp /mailserver/subs_files/dovecot.conf /etc/dovecot/dovecot.conf
