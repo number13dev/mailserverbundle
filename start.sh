@@ -13,7 +13,7 @@ chmod 770 /etc/dovecot/dovecot-sql.conf
 #POSTFIX
 cp ${SUBSTITUED_CF_PATH}main.cf /etc/postfix/main.cf
 cp ${SUBSTITUED_CF_PATH}master.cf /etc/postfix/master.cf
-cp -R ${SUBSTITUED_CF_PATH}/sql/ /etc/postfix/sql/
+cp -R ${SUBSTITUED_CF_PATH}sql/ /etc/postfix/sql/
 
 #OPENDKIM
 cp ${CF_PATH}opendkim.conf /etc/opendkim.conf

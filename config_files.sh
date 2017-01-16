@@ -38,3 +38,5 @@ DOLLAR='$' envsubst < "${CF_PATH}50-user_" > "${SUBSTITUED_CF_PATH}50-user"
 
 #SPAMASSASSIN
 DOLLAR='$' envsubst < "${CF_PATH}local_.cf" > "${SUBSTITUED_CF_PATH}local.cf"
+
+echo "SUB DONE"
