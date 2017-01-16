@@ -12,6 +12,11 @@ SQL_PATH=${SUBSTITUED_CF_PATH}/sql/
 mkdir ${SUBSTITUED_CF_PATH}
 mkdir ${SQL_PATH}
 
+echo "PATHS:"
+echo $CF_PATH
+echo $SUBSTITUED_CF_PATH
+echo $SQL_PATH
+
 #DOVEVOT
 DOLLAR='$' envsubst < "${CF_PATH}dovecot_.conf" > "${SUBSTITUED_CF_PATH}dovecot.conf"
 DOLLAR='$' envsubst < "${CF_PATH}dovecot-sql_.conf" > "${SUBSTITUED_CF_PATH}dovecot-sql.conf"
