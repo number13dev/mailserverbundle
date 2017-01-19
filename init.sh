@@ -21,9 +21,8 @@ cp /config_files/opendkim.conf /etc/opendkim.conf
 #ptr overrride
 touch /etc/postfix/ptroverride/without_ptr
 touch /etc/postfix/ptroverride/postscreen_access
-touch /etc/opendkim/signingtable
 
-echo "* default" > /etc/opendkim/signingtable
+adduser --disabled-login --disabled-password --gecos "" --home /etc/vmail/ vmail
 
 #chown/chmod/chgrp
 chown -R vmail:vmail /etc/vmail/
@@ -45,7 +44,6 @@ rm mycron
 FILE=`mktemp` ; openssl dhparam 2048 -out $FILE && mv -f $FILE /etc/myssl/dh2048.pem
 /care_scripts/sa-care.sh
 
-adduser --disabled-login --disabled-password --gecos "" --home /etc/vmail/ vmail
 
 postmap /etc/postfix/ptroverride/without_ptr
 service postfix reload
@@ -55,16 +53,16 @@ newaliases
 usermod -aG opendkim postfix
 
 #AMAVISD-MILTER COMPILIEREN
-wget 'https://github.com/ThomasLeister/amavisd-milter/archive/master.zip' -O amavisd-milter.zip
-unzip amavisd-milter.zip
-cd amavisd-milter-master
-./configure
-make
-make install
-make clean
-cd ..
-rm -r amavisd-milter-master
-rm amavisd-milter.zip
+#wget 'https://github.com/ThomasLeister/amavisd-milter/archive/master.zip' -O amavisd-milter.zip
+#unzip amavisd-milter.zip
+#cd amavisd-milter-master
+#./configure
+#make
+#make install
+#make clean
+#cd ..
+#rm -r amavisd-milter-master
+#rm amavisd-milter.zip
 
 systemctl enable amavisd-milter
 

@@ -14,6 +14,6 @@ echo Salted SHA512:
 echo $shazwo
 
 sql="insert into users (username, domain, password) values ('${user}', '${domain}', '${shazwo}'); SELECT ROW_COUNT()"
-output=$(mysql --user="vmail" --password="${SQL_PASSWORD}" --database="vmail" --execute="$sql")
+output=$(mysql --host="${SQL_HOSTNAME}" --user="${VMAIL_DB_USER}" --password="${SQL_PASSWORD}" --database="vmail" --execute="$sql")
 
 echo $output

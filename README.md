@@ -16,8 +16,11 @@ docker run -t -i \
 	-v ~/vmail:/var/vmail \
 	-v /var/log:/var/log \
 	-v ~/postfix/ptr:/etc/postfix/ptroverride \
-	-e SQL_PASSWORD=meinsqlpassword \
-	-e SQL_HOSTNAME=mysql \
+	-e SQL_PASSWORD=my-secret-pw \
+	-e SQL_HOSTNAME=meinesql \
+	-e VMAIL_DB_NAME=vmail \
+	-e VMAIL_DB_USER=root \
 	-e MAIL_SERVER_DOMAIN=mail.tutomail.de \
+
 	mailserver
 ```

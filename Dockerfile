@@ -11,19 +11,27 @@ RUN apt-get update && apt-get install -y -qq \
 	dovecot-core dovecot-imapd dovecot-lmtpd dovecot-mysql dovecot-sieve dovecot-managesieved dovecot-antispam \
 	postfix postfix-mysql \
 	opendkim opendkim-tools \
-	amavisd-new libdbi-perl libdbd-mysql-perl \
+	amavisd-new amavisd-milter libdbi-perl libdbd-mysql-perl \
 	gcc libmilter-dev make unzip \
 	spamassassin \
 	acl \
 	razor pyzor \
-	wget
+	wget \
+	mysql-client \
+	syslog-ng
+
 
 RUN service dovecot stop
 RUN service postfix stop
 RUN service opendkim stop
 
-ADD config_files config_files
-ADD care_scripts care_scripts
+ADD config_files /config_files
+ADD care_scripts /care_scripts
+ADD init.sh init.sh
+ADD addUser.sh addUser.sh
+ADD addAlias.sh addAlias.sh
+ADD init_db.sh init_db.sh
+ADD start.sh start.sh
 
 # Enables Pyzor and Razor
 USER amavis
