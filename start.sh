@@ -57,7 +57,7 @@ else
 	mkdir -p /etc/opendkim/keys
 	opendkim-genkey -s mail --bits=2048 --directory=/etc/opendkim/keys
 	chown opendkim:opendkim /etc/opendkim/keys/mail.private
-    echo "default    %:mail:/etc/opendkim/keys/mailprivate" > /etc/opendkim/keytable
+    echo "default    %:mail:/etc/opendkim/keys/mail.private" > /etc/opendkim/keytable
 fi
 
 #SPAMASSASSIN
