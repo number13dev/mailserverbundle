@@ -1,0 +1,33 @@
+use strict;
+
+$protocol = "AM.PDP";
+$unix_socketname = "/var/run/amavis/amavisd.sock";
+$inet_socket_port = undef;
+
+$policy_bank{'ORIGINATING'} = {
+    originating => 1,
+    bypass_spam_checks_maps => [1]
+};
+
+@local_domains_maps = ( [] );
+
+@lookup_sql_dsn = ( ['DBI:mysql:database={{VMAIL_DB_NAME}};host={{SQL_HOST}};port=3306', '{{VMAIL_DB_NAME}}', '{{SQL_PASSWORD}}'], );
+
+$sql_select_policy = 'SELECT "Y" as local, 1 as id FROM domains WHERE CONCAT("@",domain) IN (%k)';
+$sql_select_white_black_list = undef;
+
+$enable_dkim_verification = 1;
+
+@bypass_spam_checks_maps = (\%bypass_spam_checks, \@bypass_spam_checks_acl, \$bypass_spam_checks_re);
+$sa_tag_level_deflt = -999;         # Informationen zu Spam-Score ab diesem Level (hier: immer) in den Header schreiben
+$sa_tag2_level_deflt = 6.2;         # Ab diesem Level E-Mails als Spam markieren
+$sa_kill_level_deflt = 6.9;         # Ab diesem Level E-Mails nicht annehmen, sondern Aktion in "final_spam_destiny" auslösen (REJECT)
+
+$sa_spam_subject_tag = undef;       # Kein ***SPAM*** in den Betreff schreiben, falls Spam
+$spam_quarantine_to = undef;        # Spam nicht in die Quarantäne verschieben
+$final_spam_destiny = D_REJECT;     # Aktion, wenn kill_level erreicht wurde: E-Mail nicht annehmen und REJECT auslösen
+
+$notify_method  = 'smtp:[127.0.0.1]:25';
+
+#------------ Do not modify anything below this line -------------
+1;  # ensure a defined return

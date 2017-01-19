@@ -1,0 +1,10 @@
+use_bayes          1
+bayes_auto_learn   1
+bayes_auto_expire  1
+
+bayes_store_module Mail::SpamAssassin::BayesStore::MySQL
+
+bayes_sql_dsn      DBI:mysql:sa_bayes:{{SQL_HOST}}:3306
+bayes_sql_username {{VMAIL_DB_USER}}
+bayes_sql_password {{SQL_PASSWORD}}
+bayes_sql_override_username {{VMAIL_DB_USER}}

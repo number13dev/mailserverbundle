@@ -1,5 +1,0 @@
-user = vmail
-password = ${SQL_PASSWORD}
-hosts = mysql
-dbname = vmail
-query = SELECT destination FROM aliases WHERE source='%s'

@@ -1,0 +1,5 @@
+user = {{VMAIL_DB_USER}}
+password = {{SQL_PASSWORD}}
+hosts = {{SQL_HOST}}
+dbname = {{VMAIL_DB_USER}}
+query = SELECT * FROM domains WHERE domain='%s'
