@@ -15,12 +15,14 @@ cp /config_files/amavisd-milter.service /etc/systemd/system/amavisd-milter.servi
 cp /care_scripts/spampipe.sh /etc/vmail/spampipe.sh
 cp /config_files/spam-global.sieve /etc/vmail/sieve/global/spam-global.sieve
 cp /config_files/opendkim.conf /etc/opendkim.conf
+cp /config_files/submission_header_cleanup /etc/postfix/submission_header_cleanup
 
 
 #create some files
 #ptr overrride
 touch /etc/postfix/ptroverride/without_ptr
 touch /etc/postfix/ptroverride/postscreen_access
+touch /var/log/mail.log
 
 adduser --disabled-login --disabled-password --gecos "" --home /etc/vmail/ vmail
 

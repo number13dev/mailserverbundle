@@ -22,7 +22,7 @@ tls_high_cipherlist = EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:
 
 smtp_tls_security_level = dane
 smtp_dns_support_level = dnssec
-smtp_tls_policy_maps = mysql:/etc/postfix/virtual/tls-policy.cf
+smtp_tls_policy_maps = mysql:/etc/postfix/sql/tls-policy.cf
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 smtp_tls_protocols = !SSLv2, !SSLv3
 smtp_tls_ciphers = high
@@ -88,9 +88,9 @@ postscreen_dnsbl_action = drop
 
 ## MySQL Abfragen
 
-virtual_alias_maps = mysql:/etc/postfix/sql/mysql-aliases.cf
-virtual_mailbox_maps = mysql:/etc/postfix/sql/mysql-maps.cf
-virtual_mailbox_domains = mysql:/etc/postfix/sql/mysql-domains.cf
+virtual_alias_maps = mysql:/etc/postfix/sql/aliases.cf
+virtual_mailbox_maps = mysql:/etc/postfix/sql/maps.cf
+virtual_mailbox_domains = mysql:/etc/postfix/sql/domains.cf
 local_recipient_maps = $virtual_mailbox_maps
 
 ## Sonstiges
@@ -118,4 +118,14 @@ anvil_rate_time_unit = 60s
 smtpd_client_message_rate_limit = 10
 smtpd_client_connection_count_limit = 20
 smtpd_client_connection_rate_limit = 20
+
+
+## Milter
+
+milter_default_action = accept
+milter_protocol = 2
+smtpd_milters=unix:/var/run/opendkim/opendkim.sock
+
+#unix:/var/run/opendkim/opendkim.sock mit komma trennen /var/run/amavis/amavisd-milter.sock
+non_smtpd_milters = unix:/var/run/opendkim/opendkim.sock
 

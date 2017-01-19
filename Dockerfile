@@ -3,6 +3,7 @@ FROM ubuntu
 MAINTAINER Johannes <johannes@number13.de>
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV VMAIL_DB_NAME vmail
 
 RUN apt-get update && apt-get install -y -qq \
 	cron \
@@ -18,8 +19,7 @@ RUN apt-get update && apt-get install -y -qq \
 	razor pyzor \
 	wget \
 	mysql-client \
-	syslog-ng
-
+	rsyslog
 
 RUN service dovecot stop
 RUN service postfix stop
