@@ -59,6 +59,8 @@ else
 	chown opendkim:opendkim /etc/opendkim/keys/mail.private
     echo "default    %:mail:/etc/opendkim/keys/mail.private" > /etc/opendkim/keytable
 fi
+chown -R opendkim:opendkim /etc/opendkim
+chmod 0600 /etc/opendkim/keys/mail.private
 
 #SPAMASSASSIN
 sed -i "s/{{VMAIL_DB_USER}}/$VMAIL_DB_USER/g" /config_files_sub/local.cf
@@ -94,18 +96,18 @@ echo "database on"
 echo "init database"
 ./init_db.sh
 
+/bin/bash
 echo "STARTING"
 
 /etc/init.d/rsyslog start
 systemctl enable amavisd-milter
 
-service dovecot start
 /etc/init.d/amavis start
 /etc/init.d/amavisd-milter start
 
 /etc/init.d/opendkim start
-service dovecot reload
+service dovecot start
 /etc/init.d/postfix start
 
-/bin/bash
+#/bin/bash
 #tail -f /dev/null
