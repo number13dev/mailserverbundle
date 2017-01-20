@@ -1,5 +1,5 @@
 user = {{VMAIL_DB_USER}}
 password = {{SQL_PASSWORD}}
 hosts = {{SQL_HOST}}
-dbname = {{VMAIL_DB_USER}}
+dbname = {{VMAIL_DB_NAME}}
 query = SELECT policy, params FROM tlspolicies WHERE domain = '%s'

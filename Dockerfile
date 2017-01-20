@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y -qq \
 	razor pyzor \
 	wget \
 	mysql-client \
-	rsyslog
+	rsyslog mailutils
 
 RUN service dovecot stop
 RUN service postfix stop

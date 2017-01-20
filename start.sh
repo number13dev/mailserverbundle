@@ -96,7 +96,7 @@ echo "database on"
 echo "init database"
 ./init_db.sh
 
-/bin/bash
+
 echo "STARTING"
 
 /etc/init.d/rsyslog start
@@ -109,5 +109,20 @@ systemctl enable amavisd-milter
 service dovecot start
 /etc/init.d/postfix start
 
+#create postmaster user
+sql="insert ignore into domains (domain) values ('${DOMAIN:-MAIL_SERVER_DOMAIN}'); SELECT ROW_COUNT()"
+output=$(mysql --host="${SQL_HOSTNAME}" --user="${VMAIL_DB_USER}" --password="${SQL_PASSWORD}" --database="${VMAIL_DB_NAME}" --execute="$sql")
+echo $output
+
+sha=$(doveadm pw -s SSHA512 -p ${POSTMASTER_PW})
+echo $sha
+shazwo=${sha:9}
+sql="insert ignore into users (username, domain, password) values ('postmaster', '${DOMAIN:-MAIL_SERVER_DOMAIN}', '${shazwo}'); SELECT ROW_COUNT()"
+output=$(mysql --host="${SQL_HOSTNAME}" --user="${VMAIL_DB_USER}" --password="${SQL_PASSWORD}" --database="${VMAIL_DB_NAME}" --execute="$sql")
+echo $output
+
+mail -a /opt/backup.sql -s "Your DKIM Public Key" postmaster@${DOMAIN:-$MAIL_SERVER_DOMAIN} < /dev/null
+
 #/bin/bash
-#tail -f /dev/null
+tail -f /var/log/syslog
+tail -f /dev/null
