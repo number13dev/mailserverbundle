@@ -1,6 +1,5 @@
 # MAIL SERVER WITH DOCKER
 ## DOVECOT - POSTFIX - SPAMASSASSIN - with MYSQL
-###### inspired by: [Thomas Leistners Mailserver-Setup](https://thomas-leister.de/mailserver-unter-ubuntu-16.04/)
 
 
 ```
@@ -14,13 +13,16 @@ docker run -t -i \
 	-v /etc/letsencrypt:/etc/letsencrypt \
 	-v ~/opendkim:/etc/opendkim \
 	-v ~/vmail:/var/vmail \
-	-v /var/log:/var/log \
+	-v ~/maillog:/var/log \
 	-v ~/postfix/ptr:/etc/postfix/ptroverride \
 	-e SQL_PASSWORD=my-secret-pw \
 	-e SQL_HOSTNAME=meinesql \
 	-e VMAIL_DB_NAME=vmail \
 	-e VMAIL_DB_USER=root \
-	-e MAIL_SERVER_DOMAIN=mail.tutomail.de \
-
+	-e VMAIL_DB_PW=my-other-secret-pw \
+	-e SPAM_PW=spamasspw \
+	-e MAIL_SERVER_DOMAIN=mail.tutomail.de
 	mailserver
 ```
+
+

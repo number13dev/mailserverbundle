@@ -8,6 +8,8 @@ mkdir -p /etc/letsencrypt/live/$MAIL_SERVER_DOMAIN/
 echo "creating fresh config files"
 rm -rf /config_files_sub
 cp -r /config_files /config_files_sub
+rm -rf /init_db_sub.sql
+cp /init_db.sql /init_db_sub.sql
 
 #DOVECOT CONFIG
 
@@ -34,7 +36,7 @@ sed -i "s/{{MAIL_SERVER_DOMAIN}}/$MAIL_SERVER_DOMAIN/g" /config_files_sub/main.c
 for f in /config_files_sub/sql/*
 do
   sed -i "s/{{VMAIL_DB_USER}}/$VMAIL_DB_USER/g" $f
-  sed -i "s/{{SQL_PASSWORD}}/$SQL_PASSWORD/g" $f
+  sed -i "s/{{SQL_PASSWORD}}/$VMAIL_DB_PW/g" $f
   sed -i "s/{{SQL_HOST}}/$SQL_HOSTNAME/g" $f
   sed -i "s/{{VMAIL_DB_NAME}}/$VMAIL_DB_NAME/g" $f
 done
@@ -63,15 +65,14 @@ chown -R opendkim:opendkim /etc/opendkim
 chmod 0600 /etc/opendkim/keys/mail.private
 
 #SPAMASSASSIN
-sed -i "s/{{VMAIL_DB_USER}}/$VMAIL_DB_USER/g" /config_files_sub/local.cf
-sed -i "s/{{SQL_PASSWORD}}/$SQL_PASSWORD/g" /config_files_sub/local.cf
+sed -i "s/{{SQL_PASSWORD}}/$SPAM_PW/g" /config_files_sub/local.cf
 sed -i "s/{{SQL_HOST}}/$SQL_HOST/g" /config_files_sub/local.cf
 
 cp /config_files_sub/local.cf /etc/mail/spamassassin/local.cf
 
 #AMAVIS CONTENT FILTER
 sed -i "s/{{VMAIL_DB_USER}}/$VMAIL_DB_USER/g" /config_files_sub/50-user
-sed -i "s/{{SQL_PASSWORD}}/$SQL_PASSWORD/g" /config_files_sub/50-user
+sed -i "s/{{VMAIL_DB_PW}}/$VMAIL_DB_PW/g" /config_files_sub/50-user
 sed -i "s/{{SQL_HOST}}/$SQL_HOST/g" /config_files_sub/50-user
 sed -i "s/{{VMAIL_DB_NAME}}/$VMAIL_DB_NAME/g" /config_files_sub/50-user
 
@@ -94,7 +95,17 @@ done
 echo "database on"
 
 echo "init database"
-./init_db.sh
+echo "Spamassassin"
+cat init_db.sql | mysql -u $VMAIL_DB_USER -p$SQL_PASSWORD -h $SQL_HOSTNAME
+cat /usr/share/doc/spamassassin/sql/bayes_mysql.sql | mysql -u spamassassin -p$VMAIL_DB_PW -h $SQL_HOSTNAME --database="spamassassin"
+
+echo "wait for postfixadmin"
+while !(mysql -u root -p$SQL_PASSWORD -h $SQL_HOSTNAME -se "SELECT * FROM vmail.mailbox;")
+do
+    sleep 10
+    echo "waiting ..."
+done
+echo "database on"
 
 
 echo "STARTING"
@@ -108,18 +119,6 @@ systemctl enable amavisd-milter
 /etc/init.d/opendkim start
 service dovecot start
 /etc/init.d/postfix start
-
-#create postmaster user
-sql="insert ignore into domains (domain) values ('${DOMAIN:-MAIL_SERVER_DOMAIN}'); SELECT ROW_COUNT()"
-output=$(mysql --host="${SQL_HOSTNAME}" --user="${VMAIL_DB_USER}" --password="${SQL_PASSWORD}" --database="${VMAIL_DB_NAME}" --execute="$sql")
-echo $output
-
-sha=$(doveadm pw -s SSHA512 -p ${POSTMASTER_PW})
-echo $sha
-shazwo=${sha:9}
-sql="insert ignore into users (username, domain, password) values ('postmaster', '${DOMAIN:-MAIL_SERVER_DOMAIN}', '${shazwo}'); SELECT ROW_COUNT()"
-output=$(mysql --host="${SQL_HOSTNAME}" --user="${VMAIL_DB_USER}" --password="${SQL_PASSWORD}" --database="${VMAIL_DB_NAME}" --execute="$sql")
-echo $output
 
 mail -a /opt/backup.sql -s "Your DKIM Public Key" postmaster@${DOMAIN:-$MAIL_SERVER_DOMAIN} < /dev/null
 

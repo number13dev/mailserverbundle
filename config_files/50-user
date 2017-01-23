@@ -4,12 +4,11 @@ $protocol = "AM.PDP";
 $unix_socketname = "/var/run/amavis/amavisd.sock";
 $inet_socket_port = undef;
 
-
 @local_domains_maps = ( [] );
 
-@lookup_sql_dsn = ( ['DBI:mysql:database={{VMAIL_DB_NAME}};host={{SQL_HOST}};port=3306', 'vmail', '{{SQL_PASSWORD}}'], );
+@lookup_sql_dsn = ( ['DBI:mysql:database={{VMAIL_DB_NAME}};host={{SQL_HOST}};port=3306', 'vmail', '{{VMAIL_DB_PW}}'], );
 
-$sql_select_policy = 'SELECT "Y" as local, 1 as id FROM domains WHERE CONCAT("@",domain) IN (%k)';
+$sql_select_policy = 'SELECT "Y" as local, 1 as id FROM domain WHERE CONCAT("@",domain) IN (%k)';
 $sql_select_white_black_list = undef;
 
 $enable_dkim_verification = 1;
