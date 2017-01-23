@@ -28,9 +28,6 @@ RUN service opendkim stop
 ADD config_files /config_files
 ADD care_scripts /care_scripts
 ADD init.sh init.sh
-ADD addUser.sh addUser.sh
-ADD addAlias.sh addAlias.sh
-ADD init_db.sh init_db.sh
 ADD start.sh start.sh
 ADD init_db.sql init_db.sql
 

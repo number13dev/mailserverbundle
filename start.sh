@@ -14,7 +14,7 @@ cp /init_db.sql /init_db_sub.sql
 #DOVECOT CONFIG
 
 #DOVECOT SQL
-sed -i "s/{{SQL_PASSWORD}}/$SQL_PASSWORD/g" /config_files_sub/dovecot-sql.conf
+sed -i "s/{{VMAIL_DB_PW}}/$VMAIL_DB_PW/g" /config_files_sub/dovecot-sql.conf
 sed -i "s/{{SQL_HOSTNAME}}/$SQL_HOSTNAME/g" /config_files_sub/dovecot-sql.conf
 sed -i "s/{{VMAIL_DB_NAME}}/$VMAIL_DB_NAME/g" /config_files_sub/dovecot-sql.conf
 sed -i "s/{{VMAIL_DB_USER}}/$VMAIL_DB_USER/g" /config_files_sub/dovecot-sql.conf
@@ -96,7 +96,7 @@ echo "database on"
 
 echo "init database"
 echo "Spamassassin"
-cat init_db.sql | mysql -u $VMAIL_DB_USER -p$SQL_PASSWORD -h $SQL_HOSTNAME
+cat init_db.sql | mysql -u $VMAIL_DB_USER -p$VMAIL_DB_PW -h $SQL_HOSTNAME
 cat /usr/share/doc/spamassassin/sql/bayes_mysql.sql | mysql -u spamassassin -p$VMAIL_DB_PW -h $SQL_HOSTNAME --database="spamassassin"
 
 echo "wait for postfixadmin"
@@ -120,8 +120,9 @@ systemctl enable amavisd-milter
 service dovecot start
 /etc/init.d/postfix start
 
-mail -a /opt/backup.sql -s "Your DKIM Public Key" postmaster@${DOMAIN:-$MAIL_SERVER_DOMAIN} < /dev/null
+mail -s "Your DKIM Public Key" postmaster@${DOMAIN:-$MAIL_SERVER_DOMAIN} < /dev/null
 
 #/bin/bash
+touch /var/log/syslog
 tail -f /var/log/syslog
 tail -f /dev/null
