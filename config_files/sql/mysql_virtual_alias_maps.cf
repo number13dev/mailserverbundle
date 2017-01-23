@@ -2,4 +2,4 @@ user = {{VMAIL_DB_USER}}
 password = {{SQL_PASSWORD}}
 hosts = {{SQL_HOST}}
 dbname = {{VMAIL_DB_NAME}}
-query = SELECT * FROM users WHERE username='%u' AND domain='%d'
+query = SELECT goto FROM alias WHERE address='%s' AND active = '1'

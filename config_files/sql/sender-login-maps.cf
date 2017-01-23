@@ -1,6 +1,0 @@
-user = {{VMAIL_DB_USER}}
-password = {{SQL_PASSWORD}}
-hosts = {{SQL_HOST}}
-dbname = {{VMAIL_DB_NAME}}
-query = SELECT destination FROM aliases where source = '%s' UNION SELECT concat(username, '@', domain) FROM users WHERE username='%u' AND domain='%d'
-
