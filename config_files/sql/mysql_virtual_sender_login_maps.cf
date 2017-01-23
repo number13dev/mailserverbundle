@@ -2,4 +2,4 @@ user = {{VMAIL_DB_USER}}
 password = {{SQL_PASSWORD}}
 hosts = {{SQL_HOST}}
 dbname = {{VMAIL_DB_NAME}}
-query = select address as owns from alias where goto REGEXP '%s' and active = 1;
+select username as owns from mailbox where username = '%s' and active = 1 union select goto as owns from alias where goto = '%s' and active = 1;
