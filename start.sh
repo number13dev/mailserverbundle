@@ -120,7 +120,7 @@ systemctl enable amavisd-milter
 service dovecot start
 /etc/init.d/postfix start
 
-mail -s "Your DKIM Public Key" postmaster@${DOMAIN:-$MAIL_SERVER_DOMAIN} < /dev/null
+mail -a /etc/opendkim/keys/mail.txt -s "Your DKIM Public Key" postmaster@${DOMAIN:-$MAIL_SERVER_DOMAIN} < /dev/null
 
 #/bin/bash
 touch /var/log/syslog
