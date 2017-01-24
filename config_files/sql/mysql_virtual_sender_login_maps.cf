@@ -2,4 +2,4 @@ user = {{VMAIL_DB_USER}}
 password = {{SQL_PASSWORD}}
 hosts = {{SQL_HOST}}
 dbname = {{VMAIL_DB_NAME}}
-select username as owns from mailbox where username = '%s' and active = 1 union select goto as owns from alias where goto = '%s' and active = 1;
+query = select username as owns from mailbox where username = '%s' and active = 1 union select goto as owns from alias where goto = '%s' and active = 1;
