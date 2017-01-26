@@ -88,7 +88,7 @@ newaliases
 
 #wait for database to start up
 echo "wait for database"
-while !(mysqladmin -h $SQL_HOSTNAME -u $VMAIL_DB_USER -p$SQL_PASSWORD ping)
+while !(mysqladmin -h $SQL_HOSTNAME -u root -p$SQL_PASSWORD ping)
 do
     sleep 1
 done
@@ -96,11 +96,14 @@ echo "database on"
 
 echo "init database"
 echo "Spamassassin"
-cat init_db.sql | mysql -u $VMAIL_DB_USER -p$VMAIL_DB_PW -h $SQL_HOSTNAME
-cat /usr/share/doc/spamassassin/sql/bayes_mysql.sql | mysql -u spamassassin -p$VMAIL_DB_PW -h $SQL_HOSTNAME --database="spamassassin"
+
+mysql -u root -p$SQL_PASSWORD -h $DB_HOST -se "CREATE USER IF NOT EXISTS spamassassin@% IDENTIFIED BY '${SQL_USR_PW}';"
+
+cat init_db.sql | mysql -u root -p$SQL_PASSWORD -h $SQL_HOSTNAME
+cat /usr/share/doc/spamassassin/sql/bayes_mysql.sql | mysql -u root -p$SQL_PASSWORD -h $SQL_HOSTNAME --database="spamassassin"
 
 echo "wait for postfixadmin"
-while !(mysql -u root -p$SQL_PASSWORD -h $SQL_HOSTNAME -se "SELECT * FROM vmail.mailbox;")
+while !(mysql --silent -u root -p$SQL_PASSWORD -h $SQL_HOSTNAME -se "SELECT * FROM vmail.mailbox;")
 do
     sleep 10
     echo "waiting ..."
