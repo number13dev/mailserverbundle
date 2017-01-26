@@ -83,6 +83,10 @@ chown -R vmail /var/vmail
 chgrp -R vmail /var/vmail
 chmod -R 770 /var/vmail
 
+#smtpd_tls_dh1024 param file update...
+FILE=`mktemp` ; openssl dhparam 2048 -out $FILE && mv -f $FILE /etc/myssl/dh2048.pem
+
+
 echo "NEW ALIASES"
 newaliases
 
@@ -90,14 +94,17 @@ newaliases
 echo "wait for database"
 while !(mysqladmin -h $SQL_HOSTNAME -u root -p$SQL_PASSWORD ping)
 do
-    sleep 1
+    echo "waiting 10seconds ..."
+    sleep 10
 done
 echo "database on"
 
 echo "init database"
 echo "Spamassassin"
 
-mysql -u root -p$SQL_PASSWORD -h $DB_HOST -se "CREATE USER IF NOT EXISTS spamassassin@% IDENTIFIED BY '${SQL_USR_PW}';"
+mysql -u root -p$SQL_PASSWORD -h $DB_HOST -se "DROP USER 'spamassassin'@'%';"
+mysql -u root -p$SQL_PASSWORD -h $DB_HOST -se "CREATE USER IF NOT EXISTS 'spamassassin'@'%' IDENTIFIED BY '${SQL_USR_PW}';"
+mysql -u root -p$SQL_PASSWORD -h $DB_HOST -se "FLUSH PRIVILEGES;"
 
 cat init_db.sql | mysql -u root -p$SQL_PASSWORD -h $SQL_HOSTNAME
 cat /usr/share/doc/spamassassin/sql/bayes_mysql.sql | mysql -u root -p$SQL_PASSWORD -h $SQL_HOSTNAME --database="spamassassin"
