@@ -1,5 +1,9 @@
 # MAIL SERVER WITH DOCKER
-## DOVECOT - POSTFIX - SPAMASSASSIN - with MYSQL
+## DOVECOT - POSTFIX - SPAMASSASSIN
+
+**Don't run this in production! This container is in an early stage of development!**
+
+You'll need the Postfixadmin Container to create the vmail Tables.
 
 
 ```
