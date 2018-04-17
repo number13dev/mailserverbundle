@@ -25,7 +25,7 @@ docker run -t -i \
 	-e VMAIL_DB_USER=root \
 	-e VMAIL_DB_PW=my-other-secret-pw \
 	-e SPAM_PW=spamasspw \
-	-e MAIL_SERVER_DOMAIN=mail.example.com
+	-e MAIL_SERVER_DOMAIN=mail.example.comm \
 	mailserver
 ```
 

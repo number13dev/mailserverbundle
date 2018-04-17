@@ -1,7 +1,8 @@
 #!/bin/bash
 
-hostname mail
+hostname ${MAIL_SERVER_DOMAIN}
 echo $MAIL_HOSTNAME > /etc/mailname
+
 
 mkdir -p /etc/letsencrypt/live/$MAIL_SERVER_DOMAIN/
 

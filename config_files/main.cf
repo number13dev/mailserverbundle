@@ -1,7 +1,7 @@
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 inet_interfaces = all
 myhostname= {{MAIL_SERVER_DOMAIN}}
-smtpd_banner=$myhostname ESMTP
+smtpd_banner={{MAIL_SERVER_DOMAIN}} ESMTP
 
 myorigin = {{MAIL_SERVER_DOMAIN}}
 
