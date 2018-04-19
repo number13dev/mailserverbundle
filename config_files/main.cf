@@ -30,7 +30,7 @@ smtpd_tls_dh1024_param_file = /etc/myssl/dh2048.pem
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 
 smtpd_tls_cert_file=/etc/letsencrypt/live/{{MAIL_SERVER_DOMAIN}}/fullchain.pem
-smtpd_tls_key_file=/etc/letsencrypt/live/{{MAIL_SERVER_DOMAIN}}/privkey.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/{{MAIL_SERVER_DOMAIN}}/key.pem
 
 virtual_transport = lmtp:unix:private/dovecot-lmtp
 
