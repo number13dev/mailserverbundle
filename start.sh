@@ -121,7 +121,7 @@ echo "database on"
 
 echo "STARTING"
 
-/etc/init.d/rsyslog start
+
 systemctl enable amavisd-milter
 
 /etc/init.d/amavis start
