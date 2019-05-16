@@ -136,4 +136,4 @@ mail -s "Your DKIM Public Key" postmaster@${DOMAIN:-$MAIL_SERVER_DOMAIN} < /etc/
 #/bin/bash
 touch /var/log/syslog
 tail -f /var/log/syslog
-tail -f /dev/null
+
