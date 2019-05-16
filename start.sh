@@ -122,7 +122,7 @@ echo "database on"
 echo "STARTING"
 
 
-systemctl enable amavisd-milter
+#systemctl enable amavisd-milter
 
 /etc/init.d/amavis start
 /etc/init.d/amavisd-milter start
